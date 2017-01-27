@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.viatra.dse.dsl.model/src" modelPluginID="org.eclipse.viatra.dse.dsl.model"
+    modelName="Dseplugin" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>dseplugin.ecore</foreignModel>
+  <genPackages prefix="Dseexecutionmodel" basePackage="org.eclipse.viatra.dse.dsl"
+      disposableProviderFactory="true" ecorePackage="dseplugin.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dseplugin.ecore#//ModelQueryType">
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//ModelQueryType/MUST_HAVE_MATCH"/>
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//ModelQueryType/NO_MATCH"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dseplugin.ecore#//Comparators">
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//Comparators/HIGHER_IS_BETTER"/>
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//Comparators/LOWER_IS_BETTER"/>
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//Comparators/DIFFERENCE_TO_ZERO_IS_BETTER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dseplugin.ecore#//StrategyType">
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//StrategyType/DfsStrategy"/>
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//StrategyType/BfsStrategy"/>
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//StrategyType/FixedPriorityStrategy"/>
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//StrategyType/HillClimbingStrategy"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dseplugin.ecore#//EvolutionStrategyType">
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//EvolutionStrategyType/Nsga2"/>
+      <genEnumLiterals ecoreEnumLiteral="dseplugin.ecore#//EvolutionStrategyType/Pesa"/>
+    </genEnums>
+    <genClasses ecoreClass="dseplugin.ecore#//DseExecutionModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//DseExecutionModel/packageName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//DseExecutionModel/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseExecutionModel/configurations"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseExecutionModel/dseproblems"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseExecutionModel/dseproblemcomponents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//DseExecutionModel/numberOfRuns"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//DseProblem">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/configurations"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/constraints"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/initialmodel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/metamodel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/objectives"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/transformationrules"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/statecoder"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DseProblem/solutionstore"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//DseProblem/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//Configuration">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//Configuration/dseproblems"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//Configuration/maxNumberOfThreads"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//Configuration/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//Configuration/strategy"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//Strategy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//Strategy/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//Strategy/depth"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//Strategy/type"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//Constraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//Constraint/constraintName"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//InitialModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//InitialModel/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//InitialModel/path"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//MetaModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//MetaModel/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//BaseObjective">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//BaseObjective/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//BaseObjective/fitnessConstraint"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//BaseObjective/comparator"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//TransformationRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//TransformationRule/className"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//TransformationRule/methodName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//TransformationRule/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dseplugin.ecore#//DseProblemComponent"/>
+    <genClasses ecoreClass="dseplugin.ecore#//StateCoder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//StateCoder/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//ConstraintsObjective">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dseplugin.ecore#//ConstraintsObjective/softConstraints"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dseplugin.ecore#//ConstraintsObjective/hardConstraints"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//QueryConstraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//QueryConstraint/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//QueryConstraint/weight"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//QueryConstraint/type"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//SolutionStore">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//SolutionStore/foundSolutions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//SolutionStore/acceptAnySolutions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//SolutionStore/storeBestSolutionsOnly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//SolutionStore/logSolutionsWhenFound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//SolutionStore/registerSolutionFoundHandler"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//SolutionStore/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//DseImport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//DseImport/imports"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//EvolutionaryStrategyBuilder">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//EvolutionaryStrategyBuilder/populationSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//EvolutionaryStrategyBuilder/crossOvers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//EvolutionaryStrategyBuilder/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//EvolutionaryStrategyBuilder/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dseplugin.ecore#//EvolutionaryStrategyBuilder/mutations"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//IMutationRate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//IMutationRate/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dseplugin.ecore#//IMutationRate/weight"/>
+    </genClasses>
+    <genClasses ecoreClass="dseplugin.ecore#//Type"/>
+    <genClasses ecoreClass="dseplugin.ecore#//DomainModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dseplugin.ecore#//DomainModel/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dseplugin.ecore#//BaseStrategy"/>
+  </genPackages>
+</genmodel:GenModel>
