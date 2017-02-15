@@ -11,8 +11,8 @@ import java.util.Collections;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.viatra.dse.DslRuntimeModule;
-import org.eclipse.viatra.dse.ui.DslUiModule;
+import org.eclipse.viatra.dse.DdslRuntimeModule;
+import org.eclipse.viatra.dse.ui.DdslUiModule;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
  */
 public class DslActivator extends AbstractUIPlugin {
 
-	public static final String ORG_ECLIPSE_VIATRA_DSE_DSL = "org.eclipse.viatra.dse.Dsl";
+	public static final String ORG_ECLIPSE_VIATRA_DSE_DDSL = "org.eclipse.viatra.dse.Ddsl";
 	
 	private static final Logger logger = Logger.getLogger(DslActivator.class);
 	
@@ -73,15 +73,15 @@ public class DslActivator extends AbstractUIPlugin {
 	}
 	
 	protected Module getRuntimeModule(String grammar) {
-		if (ORG_ECLIPSE_VIATRA_DSE_DSL.equals(grammar)) {
-			return new DslRuntimeModule();
+		if (ORG_ECLIPSE_VIATRA_DSE_DDSL.equals(grammar)) {
+			return new DdslRuntimeModule();
 		}
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
-		if (ORG_ECLIPSE_VIATRA_DSE_DSL.equals(grammar)) {
-			return new DslUiModule(this);
+		if (ORG_ECLIPSE_VIATRA_DSE_DDSL.equals(grammar)) {
+			return new DdslUiModule(this);
 		}
 		throw new IllegalArgumentException(grammar);
 	}

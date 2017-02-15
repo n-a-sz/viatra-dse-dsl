@@ -4,48 +4,48 @@
 	<extension
 		point="org.eclipse.ui.editors">
 		<editor
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
 			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
 			default="true"
 			extensions="ddsl"
-			id="org.eclipse.viatra.dse.Dsl"
-			name="Dsl Editor">
+			id="org.eclipse.viatra.dse.Ddsl"
+			name="Ddsl Editor">
 		</editor>
 	</extension>
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
 			commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+					definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-			commandId="org.eclipse.viatra.dse.Dsl.validate">
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+			commandId="org.eclipse.viatra.dse.Ddsl.validate">
 		<activeWhen>
 			<reference
-					definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+					definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 			</reference>
 		</activeWhen>
 		</handler>
 		<!-- copy qualified name -->
 		<handler
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
 			<activeWhen>
-				<reference definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened" />
+				<reference definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened" />
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
 			<activeWhen>
 				<and>
-					<reference definitionId="org.eclipse.viatra.dse.Dsl.XtextEditor.opened" />
+					<reference definitionId="org.eclipse.viatra.dse.Ddsl.XtextEditor.opened" />
 					<iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -54,22 +54,22 @@
 		</handler>
 	</extension>
 	<extension point="org.eclipse.core.expressions.definitions">
-		<definition id="org.eclipse.viatra.dse.Dsl.Editor.opened">
+		<definition id="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 			<and>
 				<reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
 				<with variable="activeEditor">
 					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-						value="org.eclipse.viatra.dse.Dsl" 
+						value="org.eclipse.viatra.dse.Ddsl" 
 						forcePluginActivation="true"/>
 				</with>		
 			</and>
 		</definition>
-		<definition id="org.eclipse.viatra.dse.Dsl.XtextEditor.opened">
+		<definition id="org.eclipse.viatra.dse.Ddsl.XtextEditor.opened">
 			<and>
 				<reference definitionId="isXtextEditorActive"/>
 				<with variable="activeEditor">
 					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-						value="org.eclipse.viatra.dse.Dsl" 
+						value="org.eclipse.viatra.dse.Ddsl" 
 						forcePluginActivation="true"/>
 				</with>		
 			</and>
@@ -78,33 +78,33 @@
 	<extension
 			point="org.eclipse.ui.preferencePages">
 		<page
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-			id="org.eclipse.viatra.dse.Dsl"
-			name="Dsl">
-			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Dsl"/>
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="org.eclipse.viatra.dse.Ddsl"
+			name="Ddsl">
+			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Ddsl"/>
 		</page>
 		<page
-			category="org.eclipse.viatra.dse.Dsl"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-			id="org.eclipse.viatra.dse.Dsl.coloring"
+			category="org.eclipse.viatra.dse.Ddsl"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+			id="org.eclipse.viatra.dse.Ddsl.coloring"
 			name="Syntax Coloring">
-			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Dsl"/>
+			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Ddsl"/>
 		</page>
 		<page
-			category="org.eclipse.viatra.dse.Dsl"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-			id="org.eclipse.viatra.dse.Dsl.templates"
+			category="org.eclipse.viatra.dse.Ddsl"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+			id="org.eclipse.viatra.dse.Ddsl.templates"
 			name="Templates">
-			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Dsl"/>
+			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Ddsl"/>
 		</page>
 	</extension>
 	<extension
 			point="org.eclipse.ui.propertyPages">
 		<page
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-			id="org.eclipse.viatra.dse.Dsl"
-			name="Dsl">
-			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Dsl"/>
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="org.eclipse.viatra.dse.Ddsl"
+			name="Ddsl">
+			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Ddsl"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -114,14 +114,14 @@
 	<extension
 		point="org.eclipse.ui.keywords">
 		<keyword
-			id="org.eclipse.viatra.dse.ui.keyword_Dsl"
-			label="Dsl"/>
+			id="org.eclipse.viatra.dse.ui.keyword_Ddsl"
+			label="Ddsl"/>
 	</extension>
 	<extension
 		point="org.eclipse.ui.commands">
 	<command
 			description="Trigger expensive validation"
-			id="org.eclipse.viatra.dse.Dsl.validate"
+			id="org.eclipse.viatra.dse.Ddsl.validate"
 			name="Validate">
 	</command>
 	<!-- copy qualified name -->
@@ -142,12 +142,12 @@
 		<menuContribution
 			locationURI="popup:#TextEditorContext?after=group.edit">
 			 <command
-				 commandId="org.eclipse.viatra.dse.Dsl.validate"
+				 commandId="org.eclipse.viatra.dse.Ddsl.validate"
 				 style="push"
 				 tooltip="Trigger expensive validation">
 			<visibleWhen checkEnabled="false">
 				<reference
-					definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+					definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 				</reference>
 			</visibleWhen>
 		</command>
@@ -157,7 +157,7 @@
 			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened" />
+					<reference definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -165,7 +165,7 @@
 			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened" />
+					<reference definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -174,7 +174,7 @@
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
 					<and>
-						<reference definitionId="org.eclipse.viatra.dse.Dsl.XtextEditor.opened" />
+						<reference definitionId="org.eclipse.viatra.dse.Ddsl.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -187,7 +187,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+					<reference definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 					</reference>
 				</visibleWhen>
 			</command>
@@ -195,11 +195,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
 			commandId="org.eclipse.xtext.ui.editor.FindReferences">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+					definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -208,59 +208,59 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="ddsl">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
 		<resourceServiceProvider
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
 			uriExtension="ddsl">
 		</resourceServiceProvider>
 	</extension>
-	<!-- marker definitions for org.eclipse.viatra.dse.Dsl -->
+	<!-- marker definitions for org.eclipse.viatra.dse.Ddsl -->
 	<extension
-			id="dsl.check.fast"
-			name="Dsl Problem"
+			id="ddsl.check.fast"
+			name="Ddsl Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.fast"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
-			id="dsl.check.normal"
-			name="Dsl Problem"
+			id="ddsl.check.normal"
+			name="Ddsl Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.normal"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
-			id="dsl.check.expensive"
-			name="Dsl Problem"
+			id="ddsl.check.expensive"
+			name="Ddsl Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
 			fileExtensions="ddsl"/>
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-			category="org.eclipse.viatra.dse.Dsl"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-			id="org.eclipse.viatra.dse.Dsl.compiler.preferencePage"
+			category="org.eclipse.viatra.dse.Ddsl"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="org.eclipse.viatra.dse.Ddsl.compiler.preferencePage"
 			name="Compiler">
-			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Dsl"/>
+			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Ddsl"/>
 		</page>
 	</extension>
 	<extension point="org.eclipse.ui.propertyPages">
 		<page
-			category="org.eclipse.viatra.dse.Dsl"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-			id="org.eclipse.viatra.dse.Dsl.compiler.propertyPage"
+			category="org.eclipse.viatra.dse.Ddsl"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="org.eclipse.viatra.dse.Ddsl.compiler.propertyPage"
 			name="Compiler">
-			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Dsl"/>
+			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Ddsl"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -271,20 +271,20 @@
 		<menuContribution locationURI="popup:#TextEditorContext?after=xtext.ui.openDeclaration">
 			<command
 				commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand"
-				id="org.eclipse.viatra.dse.Dsl.OpenGeneratedCode"
+				id="org.eclipse.viatra.dse.Ddsl.OpenGeneratedCode"
 				style="push">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened" />
+					<reference definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
 			commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand">
 			<activeWhen>
-				<reference definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened" />
+				<reference definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened" />
 			</activeWhen>
 		</handler>
 	</extension>
@@ -292,11 +292,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+					definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -316,33 +316,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened"/>
+					<reference definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-	<!-- quickfix marker resolution generator for org.eclipse.viatra.dse.Dsl -->
+	<!-- quickfix marker resolution generator for org.eclipse.viatra.dse.Ddsl -->
 	<extension
 			point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="org.eclipse.viatra.dse.dsl.ui.dsl.check.fast">
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="org.eclipse.viatra.dse.dsl.ui.ddsl.check.fast">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="org.eclipse.viatra.dse.dsl.ui.dsl.check.normal">
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="org.eclipse.viatra.dse.dsl.ui.ddsl.check.normal">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="org.eclipse.viatra.dse.dsl.ui.dsl.check.expensive">
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="org.eclipse.viatra.dse.dsl.ui.ddsl.check.expensive">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
@@ -352,11 +352,11 @@
 	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+					definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -368,7 +368,7 @@
 				style="push">
 				<visibleWhen checkEnabled="false">
 					<reference
-						definitionId="org.eclipse.viatra.dse.Dsl.Editor.opened">
+						definitionId="org.eclipse.viatra.dse.Ddsl.Editor.opened">
 					</reference>
 				</visibleWhen>
 			</command>
@@ -376,28 +376,28 @@
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-			category="org.eclipse.viatra.dse.Dsl"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-			id="org.eclipse.viatra.dse.Dsl.refactoring"
+			category="org.eclipse.viatra.dse.Ddsl"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+			id="org.eclipse.viatra.dse.Ddsl.refactoring"
 			name="Refactoring">
-			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Dsl"/>
+			<keywordReference id="org.eclipse.viatra.dse.ui.keyword_Ddsl"/>
 		</page>
 	</extension>
 	<extension point="org.eclipse.compare.contentViewers">
-		<viewer id="org.eclipse.viatra.dse.Dsl.compare.contentViewers"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+		<viewer id="org.eclipse.viatra.dse.Ddsl.compare.contentViewers"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="ddsl">
 		</viewer>
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
-		<viewer id="org.eclipse.viatra.dse.Dsl.compare.contentMergeViewers"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-			extensions="ddsl" label="Dsl Compare">
+		<viewer id="org.eclipse.viatra.dse.Ddsl.compare.contentMergeViewers"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="ddsl" label="Ddsl Compare">
 		</viewer>
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
-		<provider id="org.eclipse.viatra.dse.Dsl.editors.documentProviders"
-			class="org.eclipse.viatra.dse.ui.DslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+		<provider id="org.eclipse.viatra.dse.Ddsl.editors.documentProviders"
+			class="org.eclipse.viatra.dse.ui.DdslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
 			extensions="ddsl">
 		</provider>
 	</extension>
