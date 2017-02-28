@@ -87,7 +87,7 @@ class DdslGenerator extends AbstractGenerator {
         }
     }
 
-    def static createImports() '''		
+    def static createImports() '''        
         «FOR imp : set»
             import «imp»;
         «ENDFOR»
@@ -96,12 +96,12 @@ class DdslGenerator extends AbstractGenerator {
 
     def static createDseInicialization(DseProblem problem) ''' 
         «IF problem.initialmodel.path.contains("(")»
-            EObject model  = «problem.initialmodel.path»;
+            EObject model = «problem.initialmodel.path»;
         «ELSE»
-            EObject model  = «problem.initialmodel.path»();
+            EObject model = «problem.initialmodel.path»();
         «ENDIF»
         
-        DesignSpaceExplorer dse = new DesignSpaceExplorer();       
+        DesignSpaceExplorer dse = new DesignSpaceExplorer();
         dse.setInitialModel(model);
         
         dse.addMetaModelPackage(EPackage.Registry.INSTANCE.getEPackage("«problem.metamodel.name»"));
@@ -125,8 +125,8 @@ class DdslGenerator extends AbstractGenerator {
         «FOR objective : problem.objectives»
             «IF objective instanceof ConstraintsObjective»
                 dse.addObjective(new ConstraintsObjective()
-                	«FOR hardObjective : objective.hardConstraints»
-                	    .withHardConstraint("«hardObjective.name»", «firstLetterToUpper(hardObjective.constraintName)»QuerySpecification.instance())
+                «FOR hardObjective : objective.hardConstraints»
+                    .withHardConstraint("«hardObjective.name»", «firstLetterToUpper(hardObjective.constraintName)»QuerySpecification.instance())
                 «ENDFOR»
                 «FOR softObjective : objective.softConstraints»
                     .withSoftConstraint("«softObjective.name»", «firstLetterToUpper(softObjective.constraintName)»QuerySpecification.instance(), «softObjective.weight»)
@@ -203,99 +203,96 @@ class DdslGenerator extends AbstractGenerator {
 
     def static createRunMethod(DseProblem problem) '''
         public void run«problem.name»(Boolean isFirstRun)throws IOException, ViatraQueryException{
-        				
-        				«createDseInicialization(problem)»
-        				
-        				«createDseRules(problem)»
-        				
-        				«createDseObjectives(problem)»
-        				
-        				«createDseSolutionStore(problem)»
-        				
-        				«createConfiguration(problem)»
-        				if(isFirstRun){
-        					System.out.println(dse.toStringSolutions());
-        				}
-        				
-        			}
+                        
+            «createDseInicialization(problem)»
+            
+            «createDseRules(problem)»
+            
+            «createDseObjectives(problem)»
+            
+            «createDseSolutionStore(problem)»
+            
+            «createConfiguration(problem)»
+            if(isFirstRun){
+                System.out.println(dse.toStringSolutions());
+            }
+            
+        }
     '''
 
     def static createTestMethod(DseExecutionModel model) '''
         @SuppressWarnings("deprecation")
-        			@Test
-        			public void executeProblems() throws IOException, ViatraQueryException{
-        				PrintWriter pw = new PrintWriter(new File("«model.name»_results.csv"));
-        				StringBuilder sb = new StringBuilder();
-        				Stopwatch watch = new Stopwatch();        
-        				long time = 0;
-        				  
-        				sb.append("number of runs");
-        				      sb.append(';');
-        				      sb.append("name of the problem");
-        				      sb.append(';');
-        				      sb.append("seconds");
-        				      sb.append(';');
-        				      sb.append("miliseconds");
-        				      sb.append(';');
-        				      sb.append("avarage");
-        				      sb.append("\n");
-        				      
-        				      «FOR problem : model.dseproblems»
-        				          
-        				          time = 0;
-        				          for(int i = 0; i< «model.numberOfRuns»;i++){
-        				          	watch.reset();
-        				          	watch.start();
-        				          	if(i == 0){
-        				          		run«problem.name»(true);
-        				          	}else{
-        				          		run«problem.name»(false);
-        				          	}
-        				          	watch.stop();
-        				          	
-        				          	long timeElapsed = watch.elapsedMillis();
-        				          	long s = timeElapsed/1000;
-        				          	long ms = timeElapsed - s*1000;
-        				          	time += watch.elapsedMillis();
-        				          	long avg = time/(i+1);
-        				          	sb.append(i+1);
-        				          	sb.append(';');
-        				          	   sb.append("«problem.name»");
-        				          	sb.append(";");
-        				          	sb.append(s);
-        				          	sb.append(";");
-        				          	sb.append(ms);
-        				          	sb.append(";");
-        				          	sb.append(avg);
-        				          	sb.append("\n");
-        				          	
-        				          	System.out.println("seconds: " + s + " ms: " + ms);
-            
-            		        }
-            		        
-            		        sb.append("\n");		        
+        @Test
+        public void executeProblems() throws IOException, ViatraQueryException{
+            PrintWriter pw = new PrintWriter(new File("«model.name»_results.csv"));
+            StringBuilder sb = new StringBuilder();
+            Stopwatch watch = new Stopwatch();        
+            long time = 0;
+              
+            sb.append("number of runs");
+            sb.append(';');
+            sb.append("name of the problem");
+            sb.append(';');
+            sb.append("seconds");
+            sb.append(';');
+            sb.append("miliseconds");
+            sb.append(';');
+            sb.append("avarage");
+            sb.append("\n");
+            «FOR problem : model.dseproblems»
+                  
+                time = 0;
+                for(int i = 0; i< «model.numberOfRuns»;i++){
+                    watch.reset();
+                    watch.start();
+                    if(i == 0){
+                        run«problem.name»(true);
+                    }else{
+                        run«problem.name»(false);
+                    }
+                    watch.stop();
+                    
+                    long timeElapsed = watch.elapsedMillis();
+                    long s = timeElapsed/1000;
+                    long ms = timeElapsed - s*1000;
+                    time += watch.elapsedMillis();
+                    long avg = time/(i+1);
+                    sb.append(i+1);
+                    sb.append(';');
+                       sb.append("«problem.name»");
+                    sb.append(";");
+                    sb.append(s);
+                    sb.append(";");
+                    sb.append(ms);
+                    sb.append(";");
+                    sb.append(avg);
+                    sb.append("\n");
+                    
+                    System.out.println("seconds: " + s + " ms: " + ms);
+                }
+                sb.append("\n");                
             «ENDFOR»
             pw.write(sb.toString());
             pw.close();
-            }
+        }
         '''
 
     def static createClass(DseExecutionModel model) '''
-        	package «model.packageName»;
-        	
-        	«FOR problem : model.dseproblems»
-        	    «addImports(problem)»
-        	«ENDFOR»		
-        	
-        	«createImports()»
-        	
-        	public class DseExecution«model.name»{
-        		«FOR problem : model.dseproblems»	
-        		    «createRunMethod(problem)»
-        		«ENDFOR»
-        
-        		«createTestMethod(model)»
-        	}
+    package «model.packageName»;
+    
+    «FOR problem : model.dseproblems»
+        «addImports(problem)»
+    «ENDFOR»        
+    
+    «createImports()»
+    
+    public class DseExecution«model.name»{
+        «FOR problem : model.dseproblems»    
+            «createRunMethod(problem)»
+        «ENDFOR»
+
+        «createTestMethod(model)»
+    }
     '''
 
     def getOutputConfigurations() {
