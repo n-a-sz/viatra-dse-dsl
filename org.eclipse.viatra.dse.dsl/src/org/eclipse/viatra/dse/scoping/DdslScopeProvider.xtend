@@ -3,7 +3,6 @@
  */
 package org.eclipse.viatra.dse.scoping
 
-
 /**
  * This class contains custom scoping description.
  * 
@@ -11,5 +10,4 @@ package org.eclipse.viatra.dse.scoping
  * on how and when to use it.
  */
 class DdslScopeProvider extends AbstractDdslScopeProvider {
-
 }

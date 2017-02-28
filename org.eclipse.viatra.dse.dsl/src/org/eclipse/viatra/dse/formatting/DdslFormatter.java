@@ -23,7 +23,7 @@ public class DdslFormatter extends AbstractDeclarativeFormatter {
 		org.eclipse.viatra.dse.services.DdslGrammarAccess f = (org.eclipse.viatra.dse.services.DdslGrammarAccess) getGrammarAccess();
 		for (Keyword semicolon : f.findKeywords(";")) {
 			c.setNoSpace().before(semicolon);
-			c.setLinewrap(2).after(semicolon);
+        	c.setLinewrap(2).after(semicolon);
 		}
 
 		for (Keyword colon : f.findKeywords(":")) {
