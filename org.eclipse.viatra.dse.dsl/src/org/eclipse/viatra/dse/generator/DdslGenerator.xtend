@@ -88,131 +88,131 @@ class DdslGenerator extends AbstractGenerator {
     }
 
     def static createImports() '''		
-        «FOR imp : set»
-            import «imp»;
-        «ENDFOR»
+        Â«FOR imp : setÂ»
+            import Â«impÂ»;
+        Â«ENDFORÂ»
         
     '''
 
     def static createDseInicialization(DseProblem problem) ''' 
-        «IF problem.initialmodel.path.contains("(")»
-            EObject model  = «problem.initialmodel.path»;
-        «ELSE»
-            EObject model  = «problem.initialmodel.path»();
-        «ENDIF»
+        Â«IF problem.initialmodel.path.contains("(")Â»
+            EObject model  = Â«problem.initialmodel.pathÂ»;
+        Â«ELSEÂ»
+            EObject model  = Â«problem.initialmodel.pathÂ»();
+        Â«ENDIFÂ»
         
         DesignSpaceExplorer dse = new DesignSpaceExplorer();       
         dse.setInitialModel(model);
         
-        dse.addMetaModelPackage(EPackage.Registry.INSTANCE.getEPackage("«problem.metamodel.name»"));
-        «IF problem.statecoder!=null»
-            dse.setStateCoderFactory(new «problem.statecoder.name»());
-        «ENDIF»
-        «IF problem.statecoder == null»
+        dse.addMetaModelPackage(EPackage.Registry.INSTANCE.getEPackage("Â«problem.metamodel.nameÂ»"));
+        Â«IF problem.statecoder!=nullÂ»
+            dse.setStateCoderFactory(new Â«problem.statecoder.nameÂ»());
+        Â«ENDIFÂ»
+        Â«IF problem.statecoder == nullÂ»
             dse.setStateCoderFactory(new SimpleStateCoderFactory(dse.getMetaModelPackages()));
-        «ENDIF»
+        Â«ENDIFÂ»
     '''
 
     def static createDseRules(DseProblem problem) '''
         
-        «FOR rule : problem.transformationrules»
-            «rule.className» «createRuleName(rule.methodName)» = new «rule.className»();
-            dse.addTransformationRule(«createRuleName(rule.methodName)».«rule.methodName»);
-        «ENDFOR»
+        Â«FOR rule : problem.transformationrulesÂ»
+            Â«rule.classNameÂ» Â«createRuleName(rule.methodName)Â» = new Â«rule.classNameÂ»();
+            dse.addTransformationRule(Â«createRuleName(rule.methodName)Â».Â«rule.methodNameÂ»);
+        Â«ENDFORÂ»
     '''
 
     def static createDseObjectives(DseProblem problem) '''
-        «FOR objective : problem.objectives»
-            «IF objective instanceof ConstraintsObjective»
+        Â«FOR objective : problem.objectivesÂ»
+            Â«IF objective instanceof ConstraintsObjectiveÂ»
                 dse.addObjective(new ConstraintsObjective()
-                	«FOR hardObjective : objective.hardConstraints»
-                	    .withHardConstraint("«hardObjective.name»", «firstLetterToUpper(hardObjective.constraintName)»QuerySpecification.instance())
-                «ENDFOR»
-                «FOR softObjective : objective.softConstraints»
-                    .withSoftConstraint("«softObjective.name»", «firstLetterToUpper(softObjective.constraintName)»QuerySpecification.instance(), «softObjective.weight»)
-                «ENDFOR»
-                .withComparator(Comparators.«objective.comparator»)
+                	Â«FOR hardObjective : objective.hardConstraintsÂ»
+                	    .withHardConstraint("Â«hardObjective.nameÂ»", Â«firstLetterToUpper(hardObjective.constraintName)Â»QuerySpecification.instance())
+                Â«ENDFORÂ»
+                Â«FOR softObjective : objective.softConstraintsÂ»
+                    .withSoftConstraint("Â«softObjective.nameÂ»", Â«firstLetterToUpper(softObjective.constraintName)Â»QuerySpecification.instance(), Â«softObjective.weightÂ»)
+                Â«ENDFORÂ»
+                .withComparator(Comparators.Â«objective.comparatorÂ»)
                 );
-            «ENDIF»
-            «IF !(objective instanceof ConstraintsObjective)»
-                dse.addObjective(new «objective.name»());
-            «ENDIF»
-        «ENDFOR»
+            Â«ENDIFÂ»
+            Â«IF !(objective instanceof ConstraintsObjective)Â»
+                dse.addObjective(new Â«objective.nameÂ»());
+            Â«ENDIFÂ»
+        Â«ENDFORÂ»
     '''
 
     def static createDseSolutionStore(DseProblem problem) '''
         dse.setSolutionStore(new SolutionStore()
-        «IF problem.solutionstore!=null»
-            «IF problem.solutionstore.isStoreBestSolutionsOnly »
+        Â«IF problem.solutionstore!=nullÂ»
+            Â«IF problem.solutionstore.isStoreBestSolutionsOnly Â»
                 .storeBestSolutionsOnly()
-            «ENDIF»
-            «IF problem.solutionstore.isAcceptAnySolutions»
+            Â«ENDIFÂ»
+            Â«IF problem.solutionstore.isAcceptAnySolutionsÂ»
                 .acceptAnySolutions()
-            «ENDIF»
-            «IF problem.solutionstore.isLogSolutionsWhenFound»
+            Â«ENDIFÂ»
+            Â«IF problem.solutionstore.isLogSolutionsWhenFoundÂ»
                 .logSolutionsWhenFound()
-            «ENDIF»
-            «IF problem.solutionstore.isRegisterSolutionFoundHandler»
-            «ENDIF»
-        «ENDIF»
+            Â«ENDIFÂ»
+            Â«IF problem.solutionstore.isRegisterSolutionFoundHandlerÂ»
+            Â«ENDIFÂ»
+        Â«ENDIFÂ»
         );
     '''
 
     def static createStategy(DseProblem problem) '''
-        «IF (problem.configurations.strategy as Strategy).type == StrategyType.BFS_STRATEGY»
-            dse.startExploration(Strategies.createBfsStrategy(«IF ((problem.configurations.strategy as Strategy).depth >0)»«(problem.configurations.strategy as Strategy).depth»«ENDIF»));
-        «ENDIF»
-        «IF (problem.configurations.strategy as Strategy).type == StrategyType.DFS_STRATEGY»
-            dse.startExploration(Strategies.createDfsStrategy(«IF((problem.configurations.strategy as Strategy).depth >0)»«(problem.configurations.strategy as Strategy).depth»«ENDIF»));
-        «ENDIF»
-        «IF (problem.configurations.strategy as Strategy).type == StrategyType.FIXED_PRIORITY_STRATEGY»
-            dse.startExploration(Strategies.createFixedPriorityStrategy(«IF((problem.configurations.strategy as Strategy).depth >0)»«(problem.configurations.strategy as Strategy).depth»«ENDIF»));
-        «ENDIF»
-        «IF (problem.configurations.strategy as Strategy).type == StrategyType.HILL_CLIMBING_STRATEGY»
+        Â«IF (problem.configurations.strategy as Strategy).type == StrategyType.BFS_STRATEGYÂ»
+            dse.startExploration(Strategies.createBfsStrategy(Â«IF ((problem.configurations.strategy as Strategy).depth >0)Â»Â«(problem.configurations.strategy as Strategy).depthÂ»Â«ENDIFÂ»));
+        Â«ENDIFÂ»
+        Â«IF (problem.configurations.strategy as Strategy).type == StrategyType.DFS_STRATEGYÂ»
+            dse.startExploration(Strategies.createDfsStrategy(Â«IF((problem.configurations.strategy as Strategy).depth >0)Â»Â«(problem.configurations.strategy as Strategy).depthÂ»Â«ENDIFÂ»));
+        Â«ENDIFÂ»
+        Â«IF (problem.configurations.strategy as Strategy).type == StrategyType.FIXED_PRIORITY_STRATEGYÂ»
+            dse.startExploration(Strategies.createFixedPriorityStrategy(Â«IF((problem.configurations.strategy as Strategy).depth >0)Â»Â«(problem.configurations.strategy as Strategy).depthÂ»Â«ENDIFÂ»));
+        Â«ENDIFÂ»
+        Â«IF (problem.configurations.strategy as Strategy).type == StrategyType.HILL_CLIMBING_STRATEGYÂ»
             dse.startExploration(Strategies.creatHillClimbingStrategy());
-        «ENDIF»
+        Â«ENDIFÂ»
     '''
 
     def static createEvolutionStrategy(DseProblem problem) '''
-        «IF (problem.configurations.strategy as EvolutionaryStrategyBuilder).type == EvolutionStrategyType.NSGA2»
-            EvolutionaryStrategyBuilder nsga2 = EvolutionaryStrategyBuilder.createNsga2BuilderFull(«(problem.configurations.strategy as EvolutionaryStrategyBuilder).populationSize»);
-        «ELSE»
-            EvolutionaryStrategyBuilder nsga2 = EvolutionaryStrategyBuilder.createPesaBuilderFull(«(problem.configurations.strategy as EvolutionaryStrategyBuilder).populationSize»);
-        «ENDIF»
+        Â«IF (problem.configurations.strategy as EvolutionaryStrategyBuilder).type == EvolutionStrategyType.NSGA2Â»
+            EvolutionaryStrategyBuilder nsga2 = EvolutionaryStrategyBuilder.createNsga2BuilderFull(Â«(problem.configurations.strategy as EvolutionaryStrategyBuilder).populationSizeÂ»);
+        Â«ELSEÂ»
+            EvolutionaryStrategyBuilder nsga2 = EvolutionaryStrategyBuilder.createPesaBuilderFull(Â«(problem.configurations.strategy as EvolutionaryStrategyBuilder).populationSizeÂ»);
+        Â«ENDIFÂ»
         
-        «FOR mutation : (problem.configurations.strategy as EvolutionaryStrategyBuilder).mutations»
-            nsga2.addMutation(new «mutation.name»() «IF mutation.weight>0», «mutation.weight» «ENDIF»);
-        «ENDFOR»
+        Â«FOR mutation : (problem.configurations.strategy as EvolutionaryStrategyBuilder).mutationsÂ»
+            nsga2.addMutation(new Â«mutation.nameÂ»() Â«IF mutation.weight>0Â», Â«mutation.weightÂ» Â«ENDIFÂ»);
+        Â«ENDFORÂ»
         
-        «FOR crossover : (problem.configurations.strategy as EvolutionaryStrategyBuilder).crossOvers»
-            nsga2.addCrossover(new «crossover»());
-        «ENDFOR»
+        Â«FOR crossover : (problem.configurations.strategy as EvolutionaryStrategyBuilder).crossOversÂ»
+            nsga2.addCrossover(new Â«crossoverÂ»());
+        Â«ENDFORÂ»
         dse.startExploration(nsga2.build());
     '''
 
 //Size there is still a lot here
     def static createConfiguration(DseProblem problem) '''
-        «IF problem.configurations.strategy!=null»
-            «IF problem.configurations.strategy instanceof Strategy»
-                «createStategy(problem)»
-            «ELSE»
-                «createEvolutionStrategy(problem)»
-            «ENDIF»
-        «ENDIF»
+        Â«IF problem.configurations.strategy!=nullÂ»
+            Â«IF problem.configurations.strategy instanceof StrategyÂ»
+                Â«createStategy(problem)Â»
+            Â«ELSEÂ»
+                Â«createEvolutionStrategy(problem)Â»
+            Â«ENDIFÂ»
+        Â«ENDIFÂ»
     '''
 
     def static createRunMethod(DseProblem problem) '''
-        public void run«problem.name»(Boolean isFirstRun)throws IOException, ViatraQueryException{
+        public void runÂ«problem.nameÂ»(Boolean isFirstRun)throws IOException, ViatraQueryException{
         				
-        				«createDseInicialization(problem)»
+        				Â«createDseInicialization(problem)Â»
         				
-        				«createDseRules(problem)»
+        				Â«createDseRules(problem)Â»
         				
-        				«createDseObjectives(problem)»
+        				Â«createDseObjectives(problem)Â»
         				
-        				«createDseSolutionStore(problem)»
+        				Â«createDseSolutionStore(problem)Â»
         				
-        				«createConfiguration(problem)»
+        				Â«createConfiguration(problem)Â»
         				if(isFirstRun){
         					System.out.println(dse.toStringSolutions());
         				}
@@ -224,7 +224,7 @@ class DdslGenerator extends AbstractGenerator {
         @SuppressWarnings("deprecation")
         			@Test
         			public void executeProblems() throws IOException, ViatraQueryException{
-        				PrintWriter pw = new PrintWriter(new File("«model.name»_results.csv"));
+        				PrintWriter pw = new PrintWriter(new File("Â«model.nameÂ»_results.csv"));
         				StringBuilder sb = new StringBuilder();
         				Stopwatch watch = new Stopwatch();        
         				long time = 0;
@@ -240,16 +240,16 @@ class DdslGenerator extends AbstractGenerator {
         				      sb.append("avarage");
         				      sb.append("\n");
         				      
-        				      «FOR problem : model.dseproblems»
+        				      Â«FOR problem : model.dseproblemsÂ»
         				          
         				          time = 0;
-        				          for(int i = 0; i< «model.numberOfRuns»;i++){
+        				          for(int i = 0; i< Â«model.numberOfRunsÂ»;i++){
         				          	watch.reset();
         				          	watch.start();
         				          	if(i == 0){
-        				          		run«problem.name»(true);
+        				          		runÂ«problem.nameÂ»(true);
         				          	}else{
-        				          		run«problem.name»(false);
+        				          		runÂ«problem.nameÂ»(false);
         				          	}
         				          	watch.stop();
         				          	
@@ -260,7 +260,7 @@ class DdslGenerator extends AbstractGenerator {
         				          	long avg = time/(i+1);
         				          	sb.append(i+1);
         				          	sb.append(';');
-        				          	   sb.append("«problem.name»");
+        				          	   sb.append("Â«problem.nameÂ»");
         				          	sb.append(";");
         				          	sb.append(s);
         				          	sb.append(";");
@@ -274,27 +274,27 @@ class DdslGenerator extends AbstractGenerator {
             		        }
             		        
             		        sb.append("\n");		        
-            «ENDFOR»
+            Â«ENDFORÂ»
             pw.write(sb.toString());
             pw.close();
             }
         '''
 
     def static createClass(DseExecutionModel model) '''
-        	package «model.packageName»;
+        	package Â«model.packageNameÂ»;
         	
-        	«FOR problem : model.dseproblems»
-        	    «addImports(problem)»
-        	«ENDFOR»		
+        	Â«FOR problem : model.dseproblemsÂ»
+        	    Â«addImports(problem)Â»
+        	Â«ENDFORÂ»		
         	
-        	«createImports()»
+        	Â«createImports()Â»
         	
-        	public class DseExecution«model.name»{
-        		«FOR problem : model.dseproblems»	
-        		    «createRunMethod(problem)»
-        		«ENDFOR»
+        	public class DseExecutionÂ«model.nameÂ»{
+        		Â«FOR problem : model.dseproblemsÂ»	
+        		    Â«createRunMethod(problem)Â»
+        		Â«ENDFORÂ»
         
-        		«createTestMethod(model)»
+        		Â«createTestMethod(model)Â»
         	}
     '''
 
